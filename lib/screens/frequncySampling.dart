@@ -31,9 +31,9 @@ class _SamplingTableState extends State<SamplingTable> {
                     DataCell(
                       Text('${freqModels[i].low}'),
                     ),
-                    DataCell(
-                      Text('${freqModels[i].high}'),
-                    ),
+                    // DataCell(
+                    //   Text('${freqModels[i].high}'),
+                    // ),
                   ],
                 );
               }),
@@ -46,16 +46,16 @@ class _SamplingTableState extends State<SamplingTable> {
                 ),
                 DataColumn(
                   label: Text(
-                    'Lower',
+                    'Frequency',
                     style: TextStyle(fontStyle: FontStyle.italic),
                   ),
                 ),
-                DataColumn(
-                  label: Text(
-                    'Upper',
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                )
+                // DataColumn(
+                //   label: Text(
+                //     'Upper',
+                //     style: TextStyle(fontStyle: FontStyle.italic),
+                //   ),
+                // )
               ],
             ),
           ),
