@@ -2,7 +2,7 @@
     package="com.example.taal">
   <uses-permission android:name="android.permission.RECORD_AUDIO" />
    <application
-        android:label="taal"
+        android:label="Taal"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
