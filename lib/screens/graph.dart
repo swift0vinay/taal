@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:taal/models/DataModel.dart';
 import 'package:taal/screens/home.dart';
 import 'package:flutter/services.dart';
+import 'package:taal/screens/frequncySampling.dart';
 
 class Graph extends StatefulWidget {
   final List<double> plots;
@@ -53,35 +54,50 @@ class _GraphState extends State<Graph> {
       },
       child: SafeArea(
         child: Scaffold(
-          body: Container(
-            child: SfCartesianChart(
-              primaryXAxis: CategoryAxis(
-                  isVisible: false, title: AxisTitle(text: "Time(s)")),
-              primaryYAxis: CategoryAxis(
-                title: AxisTitle(text: "Frequency(Hz)"),
-              ),
-              title: ChartTitle(text: 'Frequency(Hz) vs Time(s) Analysis'),
-              legend: Legend(
-                position: LegendPosition.top,
-                isVisible: true,
-                //title: LegendTitle(text : "Notes"),
-              ),
-              series: <LineSeries<DataModel, double>>[
-                LineSeries<DataModel, double>(
-                  legendItemText: "Actual frequency",
-                  dataSource: dm,
-                  xValueMapper: (DataModel d, _) => d.x,
-                  yValueMapper: (DataModel d, _) => d.y,
-                  // dataLabelSettings: DataLabelSettings(isVisible: true)
+          body: SingleChildScrollView(
+                      child: Column(
+
+              children:[ 
+                TextButton(onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                    builder: (context) => SamplingTable(),
+                  ));
+                }, child: Container(
+                  child: Text("Tap to see note to frequency conversion")
+                )),
+                Container(
+                child: SfCartesianChart(
+                  primaryXAxis: CategoryAxis(
+                      isVisible: false, title: AxisTitle(text: "Time(s)")),
+                  primaryYAxis: CategoryAxis(
+                    title: AxisTitle(text: "Frequency(Hz)"),
+                  ),
+                  title: ChartTitle(text: 'Frequency(Hz) vs Time(s) Analysis'),
+                  legend: Legend(
+                    position: LegendPosition.top,
+                    isVisible: true,
+                    //title: LegendTitle(text : "Notes"),
+                  ),
+                  series: <LineSeries<DataModel, double>>[
+                    LineSeries<DataModel, double>(
+                      legendItemText: "Actual frequency",
+                      dataSource: dm,
+                      xValueMapper: (DataModel d, _) => d.x,
+                      yValueMapper: (DataModel d, _) => d.y,
+                      // dataLabelSettings: DataLabelSettings(isVisible: true)
+                    ),
+                    LineSeries<DataModel, double>(
+                      legendItemText: "${this.widget.selectedNote} frequency",
+                      dataSource: dm,
+                      xValueMapper: (DataModel d, _) => d.x,
+                      yValueMapper: (DataModel d, _) => this.widget.selectedFreq,
+                      // dataLabelSettings: DataLabelSettings(isVisible: true)
+                    ),
+                  ],
                 ),
-                LineSeries<DataModel, double>(
-                  legendItemText: "${this.widget.selectedNote} frequency",
-                  dataSource: dm,
-                  xValueMapper: (DataModel d, _) => d.x,
-                  yValueMapper: (DataModel d, _) => this.widget.selectedFreq,
-                  // dataLabelSettings: DataLabelSettings(isVisible: true)
-                ),
-              ],
+              ),]
             ),
           ),
         ),

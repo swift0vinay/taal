@@ -54,7 +54,7 @@ class _TaalPageState extends State<TaalPage>
     _timer = new Timer.periodic(Duration(seconds: 1), (timer) {
       ++counter;
       plots.add(0);
-      if (counter == 10) {
+      if (counter == 61) {
         flutterFft.stopRecorder();
         timer.cancel();
         navigateToNewPage();
