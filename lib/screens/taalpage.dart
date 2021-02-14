@@ -7,6 +7,9 @@ import 'package:taal/constants.dart';
 import 'package:taal/screens/graph.dart';
 
 class TaalPage extends StatefulWidget {
+  final String selectedNote;
+  final double selectedFreq;
+  TaalPage({this.selectedNote, this.selectedFreq});
   @override
   _TaalPageState createState() => _TaalPageState();
 }
@@ -38,8 +41,8 @@ class _TaalPageState extends State<TaalPage>
   void initState() {
     // TODO: implement initState
     super.initState();
-    isRecording = flutterFft.getIsRecording;
-    frequency = flutterFft.getFrequency;
+    isRecording = flutterFft.getIsRecording ?? false;
+    frequency = flutterFft.getFrequency ?? 0;
     prevColor = colors[random.nextInt(colors.length)];
     nextColor = colors[random.nextInt(colors.length)];
     animationController =
@@ -50,11 +53,11 @@ class _TaalPageState extends State<TaalPage>
 
     _timer = new Timer.periodic(Duration(seconds: 1), (timer) {
       ++counter;
-      //plots.add(0);
-      if (counter == 61) {
+      plots.add(0);
+      if (counter == 10) {
+        flutterFft.stopRecorder();
         timer.cancel();
         navigateToNewPage();
-        flutterFft.stopRecorder();
       }
       setState(() {});
     });
@@ -66,7 +69,11 @@ class _TaalPageState extends State<TaalPage>
 
   navigateToNewPage() {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return Graph(plots: plots);
+      return Graph(
+        plots: plots,
+        selectedFreq: this.widget.selectedFreq,
+        selectedNote: this.widget.selectedNote,
+      );
     }));
   }
 
@@ -77,26 +84,27 @@ class _TaalPageState extends State<TaalPage>
     setState(() => isRecording = flutterFft.getIsRecording);
     flutterFft.onRecorderStateChanged.listen(
       (data) => {
-        frequency = data[1],
-        plots.add(frequency),
-        //plots.add(counter);
-        note = data[2],
-        prevColor = nextColor,
-        nextColor = colors[random.nextInt(colors.length)],
-        animation = Tween<Color>(begin: prevColor, end: nextColor)
-            .animate(animationController),
-        animationController.forward(),
-        flutterFft.setNote = note,
-        flutterFft.setFrequency = frequency,
+        if (data != null)
+          {
+            frequency = data[1],
+            plots.add(frequency),
+            note = data[2],
+            prevColor = nextColor,
+            nextColor = colors[random.nextInt(colors.length)],
+            animation = Tween<Color>(begin: prevColor, end: nextColor)
+                .animate(animationController),
+            animationController.forward(),
+            flutterFft.setNote = note,
+            flutterFft.setFrequency = frequency,
+          }
       },
     );
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
-    flutterFft.stopRecorder();
+    // flutterFft.stopRecorder();
     animationController.dispose();
     _timer.cancel();
   }
