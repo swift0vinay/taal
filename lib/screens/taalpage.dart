@@ -32,7 +32,6 @@ class _TaalPageState extends State<TaalPage> with TickerProviderStateMixin {
   Animation<double> expand;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     isRecording = flutterFft.getIsRecording ?? false;
     frequency = flutterFft.getFrequency ?? 0;
@@ -50,10 +49,6 @@ class _TaalPageState extends State<TaalPage> with TickerProviderStateMixin {
     note = flutterFft.getNote;
     _timer = new Timer.periodic(Duration(seconds: 1), (timer) {
       ++counter;
-<<<<<<< Updated upstream
-      plots.add(0);
-=======
->>>>>>> Stashed changes
       if (counter == 61) {
         flutterFft.stopRecorder();
         timer.cancel();
