@@ -84,6 +84,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       animation = Tween<double>(begin: 10, end: 0).animate(animationController);
       double h = getHeight(context);
       double w = getWidth(context);
+      if (w < h) {
+        double temp = h;
+        h = w;
+        w = temp;
+      }
       print('!!!!!!!!!!!!!!!!!!$h $w');
       expanded = Tween<double>(begin: h * 0.2, end: h * 0.25)
           .animate(expandController);
@@ -108,6 +113,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     // TODO: implement dispose
     super.dispose();
     animationController.dispose();
+    expandController.dispose();
   }
 
   @override
@@ -122,9 +128,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               height: h,
               width: w,
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/doodle1.png'),
-                      fit: BoxFit.cover)),
+                image: DecorationImage(
+                  image: AssetImage('assets/doodle1.png'),
+                  fit: BoxFit.cover,
+                ),
+                gradient: LinearGradient(
+                  colors: [Color(0xffbdc3c7), Color(0xff2c3e50)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
             ),
             Positioned(
               left: w * 0.25,
