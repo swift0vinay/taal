@@ -137,6 +137,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           onChanged: (val) {
                             setState(() {
                               dSelected = val;
+                              selectedFreq = freqMap[dSelected][0];
+                              noteSel = dSelected;
                             });
                           },
                         ),

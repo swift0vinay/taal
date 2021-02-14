@@ -1,4 +1,5 @@
 class DataModel{
-  double x,y;
+  double x;
+  double y;
   DataModel({this.x,this.y});
 }

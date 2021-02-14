@@ -50,10 +50,11 @@ class _TaalPageState extends State<TaalPage>
 
     _timer = new Timer.periodic(Duration(seconds: 1), (timer) {
       ++counter;
-      plots.add(0);
+      //plots.add(0);
       if (counter == 61) {
         timer.cancel();
         navigateToNewPage();
+        flutterFft.stopRecorder();
       }
       setState(() {});
     });
@@ -78,6 +79,7 @@ class _TaalPageState extends State<TaalPage>
       (data) => {
         frequency = data[1],
         plots.add(frequency),
+        //plots.add(counter);
         note = data[2],
         prevColor = nextColor,
         nextColor = colors[random.nextInt(colors.length)],
@@ -103,7 +105,7 @@ class _TaalPageState extends State<TaalPage>
   Widget build(BuildContext context) {
     double h = getHeight(context);
     double w = getWidth(context);
-    print('$counter $plots');
+    print('$counter ${plots.length} $plots');
     return Scaffold(
       body: Container(
         height: h,

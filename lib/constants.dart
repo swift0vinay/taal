@@ -12,6 +12,8 @@ double getHeight(BuildContext context) {
 Color black = Colors.black;
 Color white = Colors.white;
 Color primary = Colors.blue[900];
+double selectedFreq = 0;
+String noteSel = "";
 List<DropdownMenuItem<String>> dropDownItems = [];
 List<FreqModel> freqModels = [];
 Map<String, List<double>> freqMap = {
