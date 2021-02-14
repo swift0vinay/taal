@@ -1,6 +1,7 @@
 # taal
 
 A new Flutter project.
+Created by  - Vinay Jain & Suyash Choudhary
 
 ## Getting Started
 
